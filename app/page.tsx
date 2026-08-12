@@ -2,6 +2,7 @@ const PAGES = [
   { href: "/test/auth", label: "Auth" },
   { href: "/test/bookings", label: "Prenotazioni" },
   { href: "/test/sos", label: "SOS" },
+  { href: "/test/availability", label: "Disponibilità" },
   { href: "/test/daily", label: "Contenuti quotidiani" },
   { href: "/test/rewards", label: "Buoni" },
   { href: "/test/mood", label: "Umore" },
