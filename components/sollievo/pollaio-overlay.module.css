@@ -1,0 +1,114 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--oss-paper);
+  display: flex;
+  flex-direction: column;
+  padding: max(60px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+  animation: ossRise 0.26s ease-out both;
+}
+
+.label {
+  composes: oss-label from global;
+  color: var(--oss-testo-terziario);
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+.photoFrame {
+  border: 1.5px solid var(--oss-ink);
+  border-radius: var(--oss-radius-card-grande);
+  height: 320px;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: repeating-linear-gradient(135deg, #e7e1d4 0 9px, #efeae0 9px 18px);
+  box-shadow: 0 5px 0 rgba(23, 21, 15, 0.18);
+  overflow: hidden;
+  position: relative;
+}
+
+.photoImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slotTag {
+  position: relative;
+  font: 700 10px var(--font-mono);
+  color: var(--oss-testo-secondario);
+  background: var(--oss-card);
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 9px;
+  padding: 6px 9px;
+}
+
+.caption {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  line-height: 1.22;
+  font-style: italic;
+}
+
+.count {
+  font: 500 10px var(--font-mono);
+  color: var(--oss-testo-terziario);
+}
+
+.actions {
+  display: flex;
+  gap: 9px;
+}
+
+.nextButton {
+  flex: 1;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 18px;
+  padding: 15px;
+  background: var(--oss-verde);
+  color: #fff;
+  font: 700 14.5px var(--font-sans);
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--oss-ink);
+}
+
+.closeButton {
+  flex: none;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 18px;
+  padding: 15px 20px;
+  background: var(--oss-card);
+  font: 700 14.5px var(--font-sans);
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(23, 21, 15, 0.2);
+}
+
+.empty {
+  font-size: 13.5px;
+  color: var(--oss-testo-secondario);
+  text-align: center;
+}
+
+@keyframes ossRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
