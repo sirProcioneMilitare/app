@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSessionRole } from "@/lib/auth";
+import { RegiaView } from "@/components/regia/regia-view";
 
 export default async function RegiaPage() {
   const role = await getSessionRole();
@@ -7,5 +8,5 @@ export default async function RegiaPage() {
   if (!role) redirect("/login");
   if (role === "him") redirect("/oggi");
 
-  return <div>Regia — in arrivo.</div>;
+  return <RegiaView />;
 }
