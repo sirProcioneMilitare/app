@@ -1,10 +1,31 @@
-# SOS Burnout — backend
+# Ossigeno — SOS Burnout
 
-Backend privato per due persone (una coppia). Nessun frontend qui: solo
-API, schema dati e pagine di prova non stilizzate sotto `/test/*`, che
-servono solo a verificare che ogni endpoint risponda. Il contratto
+App privata per due persone (una coppia): backend Next.js/Supabase più il
+frontend mobile-first "Ossigeno", costruito a partire da un design handoff
+(`Ossigeno.dc.html`, fornito come prototipo di riferimento, non come
+codice) e collegato alle API reali sotto `app/api/**`. Il contratto
 completo di ogni endpoint (metodo, body, risposta, errori, chi può
-chiamarlo) è in **[`API_CONTRACT.md`](./API_CONTRACT.md)**.
+chiamarlo) è in **[`API_CONTRACT.md`](./API_CONTRACT.md)**. Restano anche
+le pagine di prova non stilizzate sotto `/test/*`, utili per colpire un
+singolo endpoint senza passare dall'interfaccia vera.
+
+## Frontend
+
+- `/login` — passphrase, imposta il cookie di sessione.
+- `/oggi`, `/prenota`, `/sollievo` (+ `/sollievo/bingo`), `/buoni` — le
+  quattro tab dell'app di lui (ruolo `him`), dietro `app/(app)/layout.tsx`.
+- `/regia` — schermo dedicato per lei (ruolo `her`): disponibilità,
+  richieste da confermare, buoni da onorare, registrazione del drop del
+  giorno dopo.
+
+Le due sessioni sono realmente separate (passphrase diverse), quindi la
+sessione `her` atterra direttamente su `/regia` invece che dietro un
+bottone nascosto in un device condiviso, come nel design originale. Buoni,
+prenotazioni, SOS e umore usano le API vere end-to-end; bingo,
+respirazione e rituale di shutdown sono interazioni locali (nessuna tabella
+nello schema li richiede); ruota premi, bonus-bingo e bigliettini
+programmati del design non sono stati implementati per questo giro (il
+backend non ha tabelle per loro).
 
 ## Stack
 
