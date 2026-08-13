@@ -1,0 +1,280 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--oss-rosso);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: max(24px, env(safe-area-inset-top)) 22px max(24px, env(safe-area-inset-bottom));
+  animation: ossRise 0.28s ease-out both;
+  overflow-y: auto;
+}
+
+.topRow {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stateLabel {
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.exitButton {
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  background: none;
+  color: #fff;
+  border-radius: 11px;
+  padding: 6px 11px;
+  font: 700 11px var(--font-mono);
+  cursor: pointer;
+}
+
+.pickWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 0;
+}
+
+.pickTitle {
+  font-family: var(--font-serif);
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.levelButton {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-radius: 18px;
+  padding: 15px 16px;
+  cursor: pointer;
+  border: 1.5px solid #fff;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-family: var(--font-sans);
+}
+
+.levelButton.selected {
+  background: #fff;
+  color: var(--oss-rosso);
+}
+
+.levelBadge {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 15px var(--font-mono);
+}
+
+.levelTitle {
+  font-size: 15.5px;
+  font-weight: 700;
+}
+
+.levelSub {
+  font-size: 12px;
+  margin-top: 3px;
+  opacity: 0.85;
+}
+
+.contextLabel {
+  font: 500 11px var(--font-mono);
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 8px;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.chip {
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: #fff;
+  font-family: var(--font-sans);
+}
+
+.chip.selected {
+  background: #fff;
+  color: var(--oss-rosso);
+}
+
+.sendButton {
+  flex: none;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 18px;
+  padding: 17px;
+  font: 700 16px var(--font-sans);
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--oss-ink);
+  background: var(--oss-giallo);
+  color: var(--oss-ink);
+}
+
+.sendButton:disabled {
+  cursor: default;
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.6);
+  box-shadow: none;
+}
+
+.sendError {
+  font-size: 12.5px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 6px;
+}
+
+.sentWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.breathCircleOuter {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breathCircle {
+  width: 180px;
+  height: 180px;
+  border-radius: 90px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  animation: ossBreathe 19s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breathCount {
+  font-family: var(--font-serif);
+  font-size: 40px;
+}
+
+.breathPhase {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  line-height: 1;
+  text-align: center;
+}
+
+.breathCaption {
+  font: 500 11.5px var(--font-mono);
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.statusBox {
+  width: 100%;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.statusChip {
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.statusText {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  line-height: 1.1;
+  margin-top: 8px;
+}
+
+.statusMeta {
+  font: 500 11.5px var(--font-mono);
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 8px;
+}
+
+.remedies {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.remedy {
+  border-radius: 14px;
+  padding: 12px 15px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.doneButton {
+  margin-top: 4px;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 18px;
+  padding: 16px;
+  background: #fff;
+  color: var(--oss-rosso);
+  font: 700 15px var(--font-sans);
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--oss-ink);
+}
+
+@keyframes ossBreathe {
+  0% {
+    transform: scale(0.6);
+  }
+  21% {
+    transform: scale(1);
+  }
+  58% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.6);
+  }
+}
+
+@keyframes ossRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

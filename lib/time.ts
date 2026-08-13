@@ -11,7 +11,13 @@ export function formatRomeDateTime(date: Date | string): string {
 
 /** Data odierna (YYYY-MM-DD) nel fuso di Roma. */
 export function todayInRome(): string {
-  const zoned = toZonedTime(new Date(), ROME_TZ);
+  return dateInRome(new Date());
+}
+
+/** Data (YYYY-MM-DD) di un istante qualsiasi, nel fuso di Roma. */
+export function dateInRome(date: Date | string): string {
+  const d = typeof date === "string" ? new Date(date) : date;
+  const zoned = toZonedTime(d, ROME_TZ);
   return formatTz(zoned, "yyyy-MM-dd", { timeZone: ROME_TZ });
 }
 

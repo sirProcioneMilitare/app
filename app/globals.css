@@ -1,0 +1,114 @@
+:root {
+  --oss-ink: #17150f;
+  --oss-paper: #f7f3eb;
+  --oss-paper-2: #ede8de;
+  --oss-card: #fffdf8;
+  --oss-card-muted: #f0ece3;
+  --oss-tab-bar: #f2ede3;
+  --oss-rosso: #c63426;
+  --oss-rosso-dark: #8e3e24;
+  --oss-giallo: #e0b23c;
+  --oss-verde: #4e7f5c;
+  --oss-testo-secondario: #6b6557;
+  --oss-testo-terziario: #9a9385;
+  --oss-inattivo: #a8a093;
+
+  --oss-dark-testo: #f7f3eb;
+  --oss-dark-testo-secondario: rgba(247, 243, 235, 0.6);
+  --oss-dark-label: rgba(247, 243, 235, 0.5);
+
+  --oss-radius-card-grande: 20px;
+  --oss-radius-card-media: 18px;
+  --oss-radius-sheet: 26px 26px 0 0;
+  --oss-radius-bottone: 18px;
+  --oss-radius-chip: 999px;
+
+  --oss-shadow-card-chiara: 0 3px 0 rgba(23, 21, 15, 0.16);
+  --oss-shadow-card-scura: 0 4px 0 rgba(23, 21, 15, 0.25);
+  --oss-shadow-sos: 0 5px 0 #17150f;
+  --oss-shadow-bottone: 0 3px 0 #17150f;
+
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: "Instrument Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--oss-paper-2);
+  color: var(--oss-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: inherit;
+}
+
+@keyframes ossBreathe {
+  0% {
+    transform: scale(0.6);
+  }
+  21% {
+    transform: scale(1);
+  }
+  58% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.6);
+  }
+}
+
+@keyframes ossRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ossPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ossBar {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.oss-label {
+  font: 700 9.5px/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
