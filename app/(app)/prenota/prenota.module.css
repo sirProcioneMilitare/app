@@ -1,0 +1,135 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 33px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.sectionLabel {
+  composes: oss-label from global;
+  color: var(--oss-testo-terziario);
+}
+
+.bookingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bookingRow {
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 16px;
+  background: var(--oss-card);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.bookingEmoji {
+  flex: none;
+  font-size: 20px;
+}
+
+.bookingBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.bookingNome {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bookingWhen {
+  font: 500 10.5px var(--font-mono);
+  color: var(--oss-testo-terziario);
+  margin-top: 4px;
+}
+
+.bookingNota {
+  font-size: 12px;
+  color: var(--oss-testo-secondario);
+  margin-top: 5px;
+}
+
+.bookingChip {
+  flex: none;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 999px;
+  padding: 5px 9px;
+  font: 700 9px var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.serviceCard {
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  background: var(--oss-card);
+  border: 1.5px solid var(--oss-ink);
+  border-radius: var(--oss-radius-card-grande);
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  color: var(--oss-ink);
+  box-shadow: var(--oss-shadow-card-chiara);
+}
+
+.serviceStripe {
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1.5px solid var(--oss-ink);
+}
+
+.serviceEmoji {
+  font-size: 26px;
+}
+
+.serviceDur {
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font: 700 9.5px var(--font-mono);
+  background: var(--oss-card);
+}
+
+.serviceBody {
+  padding: 12px 16px 14px;
+}
+
+.serviceNome {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.serviceDesc {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--oss-testo-secondario);
+  margin-top: 6px;
+}
+
+.serviceRule {
+  font: 500 10px var(--font-mono);
+  color: var(--oss-rosso);
+  margin-top: 8px;
+}
