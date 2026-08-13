@@ -1,0 +1,104 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 2px;
+}
+
+.countdownCard {
+  border: 1.5px solid var(--oss-ink);
+  border-radius: var(--oss-radius-card-grande);
+  background: var(--oss-ink);
+  color: var(--oss-dark-testo);
+  padding: 18px;
+  box-shadow: var(--oss-shadow-card-scura);
+}
+
+.countdownTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.countdownLabel {
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oss-dark-label);
+}
+
+.countdownNumbersRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6px;
+}
+
+.countdownNumber {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  line-height: 1;
+}
+
+.countdownNumber.giallo {
+  color: var(--oss-giallo);
+}
+
+.progressTrack {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(247, 243, 235, 0.16);
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--oss-giallo);
+}
+
+.dayLine {
+  font-size: 12px;
+  color: var(--oss-dark-testo-secondario);
+  margin-top: 8px;
+}
+
+.sosButton {
+  border: 1.5px solid var(--oss-ink);
+  cursor: pointer;
+  background: var(--oss-rosso);
+  color: #fff;
+  border-radius: var(--oss-radius-card-grande);
+  padding: 20px 18px;
+  text-align: left;
+  font-family: var(--font-sans);
+  box-shadow: var(--oss-shadow-sos);
+  width: 100%;
+}
+
+.sosTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.sosTitle {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  line-height: 1;
+}
+
+.sosBadge {
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.sosSub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.82);
+  margin-top: 8px;
+}
