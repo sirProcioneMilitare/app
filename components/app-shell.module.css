@@ -1,0 +1,104 @@
+.frame {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--oss-paper);
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.header {
+  flex: none;
+  padding: max(20px, env(safe-area-inset-top)) 18px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wordmarkRow {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: 25px;
+  line-height: 1;
+}
+
+.streakBadge {
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 999px;
+  padding: 3px 8px;
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.08em;
+  background: var(--oss-giallo);
+}
+
+.clock {
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.1em;
+  color: var(--oss-testo-terziario);
+}
+
+.exitBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1.5px solid var(--oss-ink);
+  background: var(--oss-card);
+  box-shadow: 0 3px 0 var(--oss-ink);
+  font: 700 11px var(--font-mono);
+  cursor: pointer;
+}
+
+.main {
+  flex: 1;
+  overflow: auto;
+  padding: 0 18px 18px;
+}
+
+.tabBar {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1.5px solid var(--oss-ink);
+  background: var(--oss-tab-bar);
+  padding: 9px 10px max(16px, env(safe-area-inset-bottom));
+}
+
+.tabButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+}
+
+.tabIcon {
+  font-size: 18px;
+  line-height: 1;
+  filter: grayscale(1) opacity(0.55);
+}
+
+.tabIcon.active {
+  filter: none;
+}
+
+.tabLabel {
+  font: 700 10px var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--oss-inattivo);
+}
+
+.tabLabel.active {
+  color: var(--oss-rosso);
+}

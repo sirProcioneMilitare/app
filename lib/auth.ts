@@ -42,7 +42,10 @@ export async function verifySessionToken(
 
 export const sessionCookieOptions = {
   httpOnly: true,
-  secure: true,
+  // In produzione (Vercel, sempre https) il cookie e' Secure. In sviluppo
+  // locale su http alcuni browser rifiutano i cookie Secure, il che
+  // impedirebbe del tutto il login: li' resta senza flag.
+  secure: process.env.NODE_ENV === "production",
   sameSite: "lax" as const,
   path: "/",
   maxAge: COOKIE_MAX_AGE_SECONDS,

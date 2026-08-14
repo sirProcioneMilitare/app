@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/daily-unlock",
+      "schedule": "*/15 6-9 * * *"
+    },
+    {
+      "path": "/api/cron/housekeeping",
+      "schedule": "0 * * * *"
+    }
+  ]
+}
