@@ -20,10 +20,11 @@ const NOTE_CHIPS = [
 ];
 
 export function SosOverlay() {
-  const { active, overlayOpen, closeOverlay, send, sending, sendError, now } = useSos();
+  const { active, overlayOpen, closeOverlay, send, conclude, sending, sendError, now } = useSos();
   const [livello, setLivello] = useState<1 | 2 | 3 | null>(null);
   const [nota, setNota] = useState<string | null>(null);
   const [leiDisponibile, setLeiDisponibile] = useState(true);
+  const [concludendo, setConcludendo] = useState(false);
 
   const sos = active?.sos ?? null;
   const showPicker = !sos || sos.stato === "conclusa" || sos.stato === "scaduta";
@@ -48,6 +49,20 @@ export function SosOverlay() {
   async function handleSend() {
     if (!livello) return;
     await send(livello, nota ?? undefined);
+  }
+
+  // "Sto meglio": conclude l'SOS lato server, poi riporta il selettore
+  // pulito per un'eventuale prossima volta.
+  async function handleConclude() {
+    setConcludendo(true);
+    try {
+      await conclude();
+      setLivello(null);
+      setNota(null);
+      closeOverlay();
+    } finally {
+      setConcludendo(false);
+    }
   }
 
   const etaLeftSec =
@@ -146,8 +161,8 @@ export function SosOverlay() {
           <div className={styles.remedies}>
             <div className={styles.remedy}>Poi: tre stretch per il collo, lenti.</div>
             <div className={styles.remedy}>Poi: venti secondi a guardare fuori dalla finestra.</div>
-            <button className={styles.doneButton} onClick={closeOverlay}>
-              Sto meglio
+            <button className={styles.doneButton} onClick={handleConclude} disabled={concludendo}>
+              {concludendo ? "..." : "Sto meglio"}
             </button>
           </div>
         </>

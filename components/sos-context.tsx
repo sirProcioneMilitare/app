@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { ApiClientError, getSosActive, sendSos } from "@/lib/client/endpoints";
+import { ApiClientError, concludeSos, getSosActive, sendSos } from "@/lib/client/endpoints";
 import type { SosActive, SosRequest } from "@/lib/client/types";
 
 interface SosContextValue {
@@ -19,6 +19,7 @@ interface SosContextValue {
   openOverlay: () => void;
   closeOverlay: () => void;
   send: (livello: 1 | 2 | 3, nota?: string) => Promise<void>;
+  conclude: () => Promise<void>;
   sending: boolean;
   sendError: string | null;
   debounceRimanentiSecondi: number;
@@ -99,6 +100,22 @@ export function SosProvider({ children }: { children: ReactNode }) {
     []
   );
 
+  // "Sto meglio": chiude l'SOS lato server. Il debounce del backend guarda solo
+  // gli SOS in stato aperta/presa_in_carico, quindi una volta concluso se ne
+  // puo' mandare subito un altro: azzeriamo anche il countdown locale.
+  const conclude = useCallback(async () => {
+    const corrente = active?.sos;
+    if (!corrente) return;
+    try {
+      await concludeSos(corrente.id);
+    } catch {
+      // Anche se fallisce rileggiamo lo stato reale qui sotto, cosi' la UI
+      // non resta disallineata rispetto al server.
+    }
+    setDebounceUntil(null);
+    await fetchActive();
+  }, [active?.sos, fetchActive]);
+
   const debounceRimanentiSecondi = debounceUntil
     ? Math.max(0, Math.round((debounceUntil - now) / 1000))
     : 0;
@@ -116,6 +133,7 @@ export function SosProvider({ children }: { children: ReactNode }) {
         },
         closeOverlay: () => setOverlayOpen(false),
         send,
+        conclude,
         sending,
         sendError,
         debounceRimanentiSecondi,

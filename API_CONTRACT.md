@@ -310,6 +310,26 @@ ETA ancora comunicata); diventano valorizzati quando passa a
 countdown è già calcolato server-side: il frontend deve solo renderizzarlo
 (e farlo scendere lato client, se vuole, senza ripollare in continuazione).
 
+### `PATCH /api/sos/:id`
+
+Chi può chiamarlo: `him|her`.
+
+Conclude un SOS ancora attivo — è il "Sto meglio" dell'app. Senza questo un
+SOS passato a `presa_in_carico` non tornerebbe mai indietro e
+`GET /api/sos/active` continuerebbe a restituirlo per sempre.
+
+Body: `{ "stato": "conclusa" }` (unico valore accettato). Consentito solo se
+l'SOS è in stato `aperta` o `presa_in_carico`.
+
+Risposta `200`: `{ "sos": { ...con stato "conclusa" e conclusa_at valorizzato } }`.
+
+Nota sul debounce: il debounce di `POST /api/sos` guarda solo gli SOS in
+stato `aperta`/`presa_in_carico`, quindi una volta concluso se ne può
+mandare subito un altro senza aspettare i 20 minuti.
+
+Errori: `input_non_valido` (400), `non_trovato` (404), `conflitto` (409,
+l'SOS è già `conclusa` o `scaduta`).
+
 ### `GET /api/sos/history?mese=YYYY-MM`
 
 Chi può chiamarlo: `him|her`.
@@ -655,13 +675,22 @@ Schedulato ogni ora (`0 * * * *`). In un'unica chiamata:
 
 1. Porta a `completata` le prenotazioni `confermata` la cui `fine_at` è
    passata.
-2. Porta a `scaduta` gli SOS `aperta` creati da più di 3 ore.
-3. Porta a `scaduto` i riscatti `richiesto` più vecchi di 30 giorni.
+2. Porta a `scaduta` gli SOS `aperta` creati da più di 3 ore (nessuno li ha
+   mai presi in carico).
+3. Porta a `conclusa` gli SOS `presa_in_carico` creati da più di 3 ore: sono
+   stati gestiti ma nessuno ha premuto "Sto meglio", e senza questa pulizia
+   resterebbero attivi per sempre in `GET /api/sos/active`.
+4. Porta a `scaduto` i riscatti `richiesto` più vecchi di 30 giorni.
 
 Risposta `200`:
 
 ```json
-{ "prenotazioni_completate": 2, "sos_scaduti": 0, "riscatti_scaduti": 1 }
+{
+  "prenotazioni_completate": 2,
+  "sos_scaduti": 0,
+  "sos_conclusi": 1,
+  "riscatti_scaduti": 1
+}
 ```
 
 (i numeri sono conteggi delle righe aggiornate in quella chiamata, non

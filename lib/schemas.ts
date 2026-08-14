@@ -65,6 +65,13 @@ export const sosHistoryQuerySchema = z.object({
 });
 export type SosHistoryQuery = z.infer<typeof sosHistoryQuerySchema>;
 
+export const sosPatchSchema = z.object({
+  stato: z.literal("conclusa", {
+    errorMap: () => ({ message: "stato deve essere 'conclusa'." }),
+  }),
+});
+export type SosPatchInput = z.infer<typeof sosPatchSchema>;
+
 // ---------------------------------------------------------------------------
 // Disponibilita'
 // ---------------------------------------------------------------------------

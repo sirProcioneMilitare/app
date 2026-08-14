@@ -122,6 +122,15 @@ Vedi `.env.example` per l'elenco completo. Note su come generarle:
    Vercel Cron invoca questi endpoint con `GET` e, se `CRON_SECRET` è
    impostata come env var, aggiunge automaticamente l'header
    `Authorization: Bearer $CRON_SECRET` — non serve altra configurazione.
+
+   > **Attenzione al piano Vercel**: il piano Hobby consente cron job con
+   > frequenza massima **giornaliera**. Questi due schedule sono più
+   > frequenti (servono per beccare le 08:30 locali con qualsiasi fuso e per
+   > la pulizia oraria), quindi richiedono un piano **Pro**. Su Hobby: o si
+   > passa a uno schedule giornaliero (perdendo la precisione dello sblocco
+   > e ritardando la chiusura delle prenotazioni), oppure si chiamano i due
+   > endpoint da uno scheduler esterno passando lo stesso header
+   > `Authorization: Bearer $CRON_SECRET`.
 4. Deploya. Dopo il primo deploy, registra il webhook Telegram puntato al
    dominio Vercel:
 

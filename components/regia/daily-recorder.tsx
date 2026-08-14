@@ -59,10 +59,14 @@ export function DailyRecorder() {
     const blob = new Blob(chunksRef.current, { type: mediaRecorderRef.current.mimeType || "audio/webm" });
     const domani = dateInRome(new Date(Date.now() + 86400000));
 
+    // Il formato dipende dal browser (webm su Chrome/Firefox, mp4 su Safari):
+    // l'estensione va derivata dal mime reale, non fissata a webm.
+    const estensione = blob.type.split("/")[1]?.split(";")[0] || "webm";
+
     const formData = new FormData();
     formData.set("tipo", "audio");
     formData.set("pubblicato_per", domani);
-    formData.set("file", new File([blob], "drop.webm", { type: blob.type }));
+    formData.set("file", new File([blob], `drop.${estensione}`, { type: blob.type }));
 
     setStato("uploading");
     setError(null);

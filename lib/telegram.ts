@@ -12,6 +12,18 @@ export interface TelegramSendResult {
   messageId: number | null;
 }
 
+/**
+ * Rende sicuro un testo dinamico dentro un messaggio con parse_mode HTML.
+ * Senza questo, una nota che contiene "<" o "&" fa fallire il parser di
+ * Telegram e la notifica non parte affatto.
+ */
+export function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 function getBotToken(): string | null {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   if (!token) {

@@ -105,6 +105,13 @@ export function getSosActive() {
   return apiFetch<SosActive>("/api/sos/active");
 }
 
+export function concludeSos(id: string) {
+  return apiFetch<{ sos: SosRequest }>(`/api/sos/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ stato: "conclusa" }),
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Disponibilita'
 // ---------------------------------------------------------------------------

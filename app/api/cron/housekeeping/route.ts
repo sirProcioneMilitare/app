@@ -35,6 +35,20 @@ async function eseguiHousekeeping(request: NextRequest) {
 
     if (sosError) throw new ApiError("errore_interno", sosError.message, 500);
 
+    // Un SOS preso in carico ma mai concluso a mano ("Sto meglio") resterebbe
+    // altrimenti attivo per sempre, e GET /api/sos/active continuerebbe a
+    // restituirlo. Qui viene chiuso: e' stato gestito, quindi "conclusa" e non
+    // "scaduta".
+    const { data: sosConclusi, error: sosConclusiError } = await supabase
+      .from("sos_requests")
+      .update({ stato: "conclusa", conclusa_at: now.toISOString() })
+      .eq("stato", "presa_in_carico")
+      .lt("creato_at", sogliaSos)
+      .select("id");
+
+    if (sosConclusiError)
+      throw new ApiError("errore_interno", sosConclusiError.message, 500);
+
     const sogliaRiscatti = new Date(
       now.getTime() - RISCATTI_SCADENZA_GIORNI * 24 * 60 * 60 * 1000
     ).toISOString();
@@ -52,6 +66,7 @@ async function eseguiHousekeeping(request: NextRequest) {
     return NextResponse.json({
       prenotazioni_completate: prenotazioniCompletate?.length ?? 0,
       sos_scaduti: sosScaduti?.length ?? 0,
+      sos_conclusi: sosConclusi?.length ?? 0,
       riscatti_scaduti: riscattiScaduti?.length ?? 0,
     });
   } catch (error) {

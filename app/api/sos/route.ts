@@ -5,7 +5,7 @@ import { sosCreateSchema } from "@/lib/schemas";
 import { DEBOUNCE_MINUTI, LIVELLO_DESCRIZIONI } from "@/lib/sos";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { formatRomeDateTime } from "@/lib/time";
-import { sendMessage } from "@/lib/telegram";
+import { escapeHtml, sendMessage } from "@/lib/telegram";
 
 export async function POST(request: NextRequest) {
   try {
@@ -67,9 +67,9 @@ export async function POST(request: NextRequest) {
     if (chatId) {
       const descrizione = LIVELLO_DESCRIZIONI[livello as 1 | 2 | 3];
       const testo = [
-        `🚨 <b>SOS livello ${livello}</b> — ${descrizione}`,
-        nota ? `Nota: ${nota}` : null,
-        `Orario: ${formatRomeDateTime(sos.creato_at)}`,
+        `🚨 <b>SOS livello ${livello}</b> — ${escapeHtml(descrizione)}`,
+        nota ? `Nota: ${escapeHtml(nota)}` : null,
+        `Orario: ${escapeHtml(formatRomeDateTime(sos.creato_at))}`,
       ]
         .filter(Boolean)
         .join("\n");

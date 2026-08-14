@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { computeDayInfo } from "@/lib/client/day";
 import { formatMmSs, useSos } from "@/components/sos-context";
+import { DailyCard } from "@/components/oggi/daily-card";
 import { MoodCard } from "@/components/oggi/mood-card";
 import { ShutdownRitual } from "@/components/oggi/shutdown";
 import styles from "./oggi.module.css";
@@ -59,6 +60,8 @@ export default function OggiPage() {
         </div>
         <div className={styles.sosSub}>{sosSub}</div>
       </button>
+
+      <DailyCard />
 
       <MoodCard />
 
