@@ -6,19 +6,35 @@ const timeFmt = new Intl.DateTimeFormat("it-IT", {
   timeZone: ROME_TZ,
 });
 
-export function formatBookingWhen(inizioAt: string, fineAt: string): string {
-  const giornoChiave = dateInRome(inizioAt);
+const giornoLungoFmt = new Intl.DateTimeFormat("it-IT", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  timeZone: ROME_TZ,
+});
+
+export function formatOra(iso: string): string {
+  return timeFmt.format(new Date(iso));
+}
+
+export function formatIntervallo(inizioAt: string, fineAt: string): string {
+  return `${formatOra(inizioAt)} → ${formatOra(fineAt)}`;
+}
+
+/** "oggi" / "domani" / "giovedì 3 settembre" */
+export function formatGiorno(giorno: string): string {
   const oggi = todayInRome();
   const domani = dateInRome(new Date(Date.now() + 86400000));
 
-  const giornoLabel =
-    giornoChiave === oggi
-      ? "oggi"
-      : giornoChiave === domani
-        ? "domani"
-        : new Intl.DateTimeFormat("it-IT", { day: "2-digit", month: "2-digit", timeZone: ROME_TZ }).format(
-            new Date(inizioAt)
-          );
+  if (giorno === oggi) return "oggi";
+  if (giorno === domani) return "domani";
 
-  return `${giornoLabel} · ${timeFmt.format(new Date(inizioAt))} → ${timeFmt.format(new Date(fineAt))}`;
+  // Mezzogiorno per stare lontani dai bordi del fuso orario.
+  return giornoLungoFmt.format(new Date(`${giorno}T12:00:00Z`));
+}
+
+export function giorniProssimi(quanti: number): string[] {
+  return Array.from({ length: quanti }, (_, i) =>
+    dateInRome(new Date(Date.now() + i * 86400000))
+  );
 }

@@ -1,49 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { getMoodHistory, logout } from "@/lib/client/endpoints";
-import { computeMoodStreak } from "@/lib/client/streak";
-import { ROME_TZ } from "@/lib/time";
-import { SosProvider } from "./sos-context";
-import { SosOverlay } from "./sos-overlay";
+import { logout } from "@/lib/client/endpoints";
+import type { Me } from "@/lib/client/types";
 import styles from "./app-shell.module.css";
 
 const TABS = [
-  { href: "/oggi", label: "OGGI", icon: "☀" },
-  { href: "/prenota", label: "PRENOTA", icon: "📅" },
-  { href: "/sollievo", label: "SOLLIEVO", icon: "🫁" },
-  { href: "/buoni", label: "BUONI", icon: "🎟" },
+  { href: "/calendario", label: "CALENDARIO", icon: "🗓" },
+  { href: "/prenota", label: "PRENOTA", icon: "➕" },
 ];
 
-function useClock() {
-  const [clock, setClock] = useState("");
-  useEffect(() => {
-    const fmt = new Intl.DateTimeFormat("it-IT", {
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZone: ROME_TZ,
-    });
-    const tick = () => setClock(fmt.format(new Date()));
-    tick();
-    const id = setInterval(tick, 15000);
-    return () => clearInterval(id);
-  }, []);
-  return clock;
+const MeContext = createContext<Me | null>(null);
+
+export function useMe(): Me {
+  const me = useContext(MeContext);
+  if (!me) throw new Error("useMe deve stare dentro <AppShell>");
+  return me;
 }
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+export function AppShell({ me, children }: { me: Me; children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const clock = useClock();
-  const [streak, setStreak] = useState<number | null>(null);
-
-  useEffect(() => {
-    getMoodHistory(60)
-      .then((res) => setStreak(computeMoodStreak(res.mood_logs)))
-      .catch(() => setStreak(null));
-  }, []);
 
   async function handleLogout() {
     await logout().catch(() => {});
@@ -52,17 +31,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <SosProvider>
+    <MeContext.Provider value={me}>
       <div className={styles.frame}>
         <header className={styles.header}>
           <div className={styles.wordmarkRow}>
-            <div className={styles.wordmark}>Ossigeno</div>
-            {streak !== null && streak > 0 && (
-              <div className={styles.streakBadge}>SERIE {streak}</div>
-            )}
+            <div className={styles.wordmark}>Ganzelli Calendar</div>
+            <div className={styles.chi}>
+              {me.nome} · con {me.altro.nome}
+            </div>
           </div>
-          <div className={styles.clock}>{clock}</div>
-          <button className={styles.exitBtn} onClick={handleLogout} title="Esci">
+          <button className={styles.exitBtn} onClick={handleLogout}>
             esci
           </button>
         </header>
@@ -74,15 +52,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             const active = pathname?.startsWith(t.href) ?? false;
             return (
               <Link key={t.href} href={t.href} className={styles.tabButton}>
-                <div className={`${styles.tabIcon} ${active ? styles.active : ""}`}>{t.icon}</div>
-                <div className={`${styles.tabLabel} ${active ? styles.active : ""}`}>{t.label}</div>
+                <div className={`${styles.tabIcon} ${active ? styles.active : ""}`}>
+                  {t.icon}
+                </div>
+                <div className={`${styles.tabLabel} ${active ? styles.active : ""}`}>
+                  {t.label}
+                </div>
               </Link>
             );
           })}
         </nav>
-
-        <SosOverlay />
       </div>
-    </SosProvider>
+    </MeContext.Provider>
   );
 }

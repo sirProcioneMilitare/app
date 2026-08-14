@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   background: var(--oss-paper);
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
   position: relative;
 }
@@ -19,9 +19,7 @@
 
 .wordmarkRow {
   flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  min-width: 0;
 }
 
 .wordmark {
@@ -30,30 +28,23 @@
   line-height: 1;
 }
 
-.streakBadge {
-  border: 1.5px solid var(--oss-ink);
-  border-radius: 999px;
-  padding: 3px 8px;
+.chi {
   font: 700 9.5px var(--font-mono);
-  letter-spacing: 0.08em;
-  background: var(--oss-giallo);
-}
-
-.clock {
-  font: 700 9.5px var(--font-mono);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--oss-testo-terziario);
+  margin-top: 5px;
 }
 
 .exitBtn {
-  width: 40px;
-  height: 40px;
+  flex: none;
   border-radius: 12px;
   border: 1.5px solid var(--oss-ink);
   background: var(--oss-card);
   box-shadow: 0 3px 0 var(--oss-ink);
   font: 700 11px var(--font-mono);
   cursor: pointer;
+  padding: 10px 12px;
 }
 
 .main {
@@ -65,7 +56,7 @@
 .tabBar {
   flex: none;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border-top: 1.5px solid var(--oss-ink);
   background: var(--oss-tab-bar);
   padding: 9px 10px max(16px, env(safe-area-inset-bottom));

@@ -1,0 +1,187 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 33px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.sectionLabel {
+  composes: oss-label from global;
+  color: var(--oss-testo-terziario);
+}
+
+/* Inviti in sospeso */
+
+.inviti {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.invito {
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 18px;
+  background: var(--oss-giallo);
+  padding: 14px 16px;
+  box-shadow: var(--oss-shadow-card-chiara);
+}
+
+.invitoHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.invitoEmoji {
+  font-size: 22px;
+}
+
+.invitoNome {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.invitoQuando {
+  font: 500 10.5px var(--font-mono);
+  margin-top: 4px;
+}
+
+.invitoNota {
+  font-size: 12.5px;
+  margin-top: 8px;
+}
+
+.invitoAzioni {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.accetta {
+  flex: 1;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 12px;
+  padding: 10px;
+  background: var(--oss-verde);
+  color: #fff;
+  font: 700 12.5px var(--font-sans);
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--oss-ink);
+}
+
+.rifiuta {
+  flex: none;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: var(--oss-card);
+  font: 700 12.5px var(--font-sans);
+  cursor: pointer;
+}
+
+.attesa {
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+/* Agenda */
+
+.giorno {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.giornoLabel {
+  font: 700 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oss-ink);
+  border-bottom: 1.5px solid var(--oss-ink);
+  padding-bottom: 6px;
+}
+
+.evento {
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 16px;
+  background: var(--oss-card);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  box-shadow: var(--oss-shadow-card-chiara);
+}
+
+.evento.insieme {
+  background: var(--oss-card);
+  border-left: 6px solid var(--oss-verde);
+}
+
+.evento.personale {
+  border-left: 6px solid var(--oss-giallo);
+}
+
+.eventoEmoji {
+  flex: none;
+  font-size: 20px;
+}
+
+.eventoBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.eventoNome {
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.eventoOra {
+  font: 500 10.5px var(--font-mono);
+  color: var(--oss-testo-terziario);
+  margin-top: 4px;
+}
+
+.eventoChi {
+  font-size: 12px;
+  color: var(--oss-testo-secondario);
+  margin-top: 5px;
+}
+
+.eventoNota {
+  font-size: 12px;
+  color: var(--oss-testo-secondario);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.annulla {
+  flex: none;
+  border: 1.5px solid var(--oss-ink);
+  border-radius: 11px;
+  padding: 7px 10px;
+  background: var(--oss-card-muted);
+  font: 700 10.5px var(--font-sans);
+  cursor: pointer;
+}
+
+.vuoto {
+  font-size: 13.5px;
+  color: var(--oss-testo-secondario);
+  line-height: 1.5;
+  padding: 8px 0;
+}
+
+.errore {
+  font-size: 12.5px;
+  color: var(--oss-rosso);
+}

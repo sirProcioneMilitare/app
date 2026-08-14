@@ -40,7 +40,7 @@ export default function LoginPage() {
   return (
     <main className={styles.page}>
       <form className={styles.card} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>Ossigeno</h1>
+        <h1 className={styles.title}>Ganzelli Calendar</h1>
         <p className={styles.subtitle}>Inserisci la tua passphrase.</p>
         <input
           className={styles.input}

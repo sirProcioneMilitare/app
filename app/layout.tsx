@@ -2,7 +2,7 @@ import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/goo
 import "./globals.css";
 
 export const metadata = {
-  title: "Ossigeno",
+  title: "Ganzelli Calendar",
 };
 
 const instrumentSans = Instrument_Sans({

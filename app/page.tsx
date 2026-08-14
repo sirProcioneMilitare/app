@@ -5,6 +5,5 @@ export default async function RootPage() {
   const role = await getSessionRole();
 
   if (!role) redirect("/login");
-  if (role === "her") redirect("/regia");
-  redirect("/oggi");
+  redirect("/calendario");
 }

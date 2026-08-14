@@ -1,12 +1,21 @@
 import { redirect } from "next/navigation";
-import { getSessionRole } from "@/lib/auth";
+import { altroRuolo, getSessionRole, nomeDi } from "@/lib/auth";
 import { AppShell } from "@/components/app-shell";
 
-export default async function AppLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const role = await getSessionRole();
-
   if (!role) redirect("/login");
-  if (role === "her") redirect("/regia");
 
-  return <AppShell>{children}</AppShell>;
+  const altro = altroRuolo(role);
+  const me = {
+    role,
+    nome: nomeDi(role),
+    altro: { role: altro, nome: nomeDi(altro) },
+  };
+
+  return <AppShell me={me}>{children}</AppShell>;
 }

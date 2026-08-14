@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import {
   COOKIE_NAME,
   constantTimeEquals,
+  nomeDi,
   sessionCookieOptions,
   signSessionToken,
   type Role,
@@ -19,30 +20,25 @@ export async function POST(request: NextRequest) {
     }
 
     const { passphrase } = parsed.data;
-    const passphraseHim = process.env.PASSPHRASE_HIM ?? "";
-    const passphraseHer = process.env.PASSPHRASE_HER ?? "";
+
+    // Confrontiamo sempre entrambe le passphrase, in tempo costante, cosi' il
+    // tempo di risposta non rivela quale delle due ha quasi indovinato.
+    const matchesA = constantTimeEquals(passphrase, process.env.PASSPHRASE_A ?? "");
+    const matchesB = constantTimeEquals(passphrase, process.env.PASSPHRASE_B ?? "");
 
     let role: Role | null = null;
-    // Confrontiamo sempre entrambe le passphrase, in tempo costante, cosi'
-    // il tempo di risposta non rivela quale ruolo (se uno) ha quasi indovinato.
-    const matchesHim = constantTimeEquals(passphrase, passphraseHim);
-    const matchesHer = constantTimeEquals(passphrase, passphraseHer);
-    if (matchesHim) role = "him";
-    else if (matchesHer) role = "her";
+    if (matchesA) role = "a";
+    else if (matchesB) role = "b";
 
     if (!role) {
-      return errorResponse(
-        "non_autenticato",
-        "Passphrase non valida.",
-        401
-      );
+      return errorResponse("non_autenticato", "Passphrase non valida.", 401);
     }
 
     const token = await signSessionToken(role);
     const cookieStore = await cookies();
     cookieStore.set(COOKIE_NAME, token, sessionCookieOptions);
 
-    return NextResponse.json({ role });
+    return NextResponse.json({ role, nome: nomeDi(role) });
   } catch (error) {
     return handleRouteError(error);
   }

@@ -5,9 +5,14 @@ import { jwtVerify, SignJWT } from "jose";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { ApiError } from "./errors";
 
-export type Role = "him" | "her";
+/**
+ * Due persone con gli stessi identici permessi. I ruoli sono neutri ('a' e
+ * 'b') e i nomi visualizzati arrivano dalle env var NOME_A / NOME_B, cosi'
+ * si cambiano senza toccare database o codice.
+ */
+export type Role = "a" | "b";
 
-export const COOKIE_NAME = "sos_session";
+export const COOKIE_NAME = "ganzelli_session";
 const COOKIE_MAX_AGE_SECONDS = 90 * 24 * 60 * 60; // 90 giorni
 
 function getJwtSecret() {
@@ -16,6 +21,15 @@ function getJwtSecret() {
     throw new Error("JWT_SECRET non impostata.");
   }
   return new TextEncoder().encode(secret);
+}
+
+export function nomeDi(role: Role): string {
+  const nome = role === "a" ? process.env.NOME_A : process.env.NOME_B;
+  return nome?.trim() || (role === "a" ? "Persona A" : "Persona B");
+}
+
+export function altroRuolo(role: Role): Role {
+  return role === "a" ? "b" : "a";
 }
 
 export async function signSessionToken(role: Role): Promise<string> {
@@ -31,7 +45,7 @@ export async function verifySessionToken(
 ): Promise<{ role: Role } | null> {
   try {
     const { payload } = await jwtVerify(token, getJwtSecret());
-    if (payload.role === "him" || payload.role === "her") {
+    if (payload.role === "a" || payload.role === "b") {
       return { role: payload.role };
     }
     return null;
@@ -68,30 +82,15 @@ export async function getSessionRole(): Promise<Role | null> {
 }
 
 /**
- * Verifica che la richiesta abbia una sessione valida con uno dei ruoli
- * ammessi. Lancia ApiError 401 se manca/e' invalida, 403 se il ruolo non e'
- * tra quelli ammessi.
+ * Richiede una sessione valida. Non c'e' un parametro "ruolo ammesso": in
+ * questa app i due ruoli possono fare esattamente le stesse cose, e chi puo'
+ * agire su un singolo evento si decide caso per caso nella route.
  */
-export async function requireRole(
-  allowed: Role | Role[]
-): Promise<{ role: Role }> {
-  const allowedRoles = Array.isArray(allowed) ? allowed : [allowed];
+export async function requireSession(): Promise<{ role: Role }> {
   const role = await getSessionRole();
 
   if (!role) {
-    throw new ApiError(
-      "non_autenticato",
-      "Devi effettuare l'accesso.",
-      401
-    );
-  }
-
-  if (!allowedRoles.includes(role)) {
-    throw new ApiError(
-      "non_autorizzato",
-      "Non hai i permessi per questa azione.",
-      403
-    );
+    throw new ApiError("non_autenticato", "Devi effettuare l'accesso.", 401);
   }
 
   return { role };
